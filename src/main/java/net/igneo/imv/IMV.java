@@ -23,9 +23,10 @@ public class IMV
     public static final String MOD_ID = "igneosminingrevamp";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-    public IMV(FMLJavaModLoadingContext context)
+
+    public IMV()
     {
-        IEventBus modEventBus = context.getModEventBus();
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
@@ -38,30 +39,31 @@ public class IMV
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-
+        // Common setup code
     }
 
-    // Add the example block item to the building blocks tab
+    // Add blocks and items to the creative tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-
+        // Code for adding items/blocks to creative tabs
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    // Called when the server starts
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
-
+        // Server starting logic
     }
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    // Client-specific event handler
+    @Mod.EventBusSubscriber(modid = IMV.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-
+            // Set the render layer for MOSSY_SATURINIUM to cutout
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MOSSY_SATURINIUM.get(), RenderType.cutout());
         }
     }
 }
